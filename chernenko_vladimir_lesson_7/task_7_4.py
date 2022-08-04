@@ -13,11 +13,25 @@
 Подсказка: размер файла можно получить из атрибута .st_size объекта os.stat.
 """
 
-import os
+import os 
 
-def func(name):
+def degree_ten(x):
+    y = 1
+    while x:
+        x //= 10
+        y += 1
+    return y
+
+def func_main(name=os.getcwd()):
     dict_x = {}
-    for path_x, folders, files in os.walk(name):
+    for path_x, folder, files in os.walk(name):
         for file in files:
-            pass
+            key_x = 10 ** degree_ten(os.stat(os.path.join(path_x, file)).st_size)
+            if dict_x.get(key_x):
+                dict_x[key_x] += 1
+            else:
+                dict_x[key_x] = 1
+    return dict_x
 
+if __name__ == '__main__':
+    print(func_main())
